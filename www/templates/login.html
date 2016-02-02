@@ -1,0 +1,21 @@
+<ion-view title="Login" hide-nav-bar="true">
+  <ion-content overflow-scroll="true" padding="true" class="has-header" style="text-align:center;">
+    <img src="https://getmondo.co.uk/static/images/logo.svg" width="75%"/>
+    <br>
+    <br>
+    <p ng-hide="gotCode">
+      This is <strong>not</strong> an Mondo sanctioned application. <br>
+      It's just a quick and dirty hack.
+      <br>
+      Please don't use it.
+      <br>
+      <br>
+      <button ng-click="login()" class="button button-positive">Login with Mondo</button>
+    </p>
+    <p ng-show="gotCode">
+      <span ng-hide="error">
+        Grabbing a token. Please wait...
+      </span>
+    </p>
+  </ion-content>
+</ion-view>

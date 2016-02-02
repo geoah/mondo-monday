@@ -1,0 +1,52 @@
+<ion-view title="Transactions" hide-nav-bar="false">
+  <ion-nav-bar class="bar-positive" ng-controller="accountCtrl">
+    <!-- <ion-nav-buttons side="secondary">
+      <button ng-click="reload()" class="button button-icon ion-ios-refresh-empty"></button>
+    </ion-nav-buttons> -->
+    <ion-nav-buttons side="secondary">
+      <button class="button button-clear button-light">
+        {{ feed[0].transaction.account_balance | money:feed[0].transaction.local_currency }}
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="refresh()"></ion-refresher>
+    <p ng-show="loading" style="text-align:center;">
+      Getting transactions...
+    </p>
+    <ion-list>
+      <div ng-repeat="feedItem in feed">
+        <div class="item item-divider" ng-show="(feedItem.created.substring(0, 10)!=feed[$index-1].created.substring(0, 10))">
+          {{ feedItem.created | amCalendarDate }}
+        </div>
+        <ion-item class="item item-avatar item-icon-right">
+          <img ng-src="{{ feedItem.transaction.merchant.logo || feedItem.transaction.merchant.google_places_icon || feedItem.transaction.merchant.foursquare_category_icon || 'https://getmondo.co.uk/static/images/mondo-mark-01.png' }}">
+          <!-- <span class="item-note amount" ng-show="feedItem.transaction.amount!=0" ng-class="{assertive:feedItem.transaction.amount<0, positive:feedItem.transaction.amount>0}">
+            {{ feedItem.transaction.amount / 100 }}
+            <span ng-bind-html="feedItem.transaction.local_currency | currency"></span>
+          </span> -->
+          <h2>{{ feedItem.transaction.merchant.name || feedItem.transaction.description }}</h2>
+          <!-- <p ng-show="feedItem.transaction.metadata.notes">{{ feedItem.transaction.metadata.notes }}</p> -->
+          <p>
+            <span class="category">{{ feedItem.transaction.category | categoryToText }}</span>
+            {{ feedItem.transaction.metadata.notes }}
+          </p>
+          <i class="icon">
+            <div ng-show="feedItem.transaction.amount!=0" ng-class="{assertive:feedItem.transaction.amount<0, positive:feedItem.transaction.amount>0}">
+              <div class="amount">
+                {{ feedItem.transaction.amount | money:feedItem.transaction.local_currency }}
+              </div>
+              <div class="balance">
+                balance {{ feedItem.transaction.account_balance | money:feedItem.transaction.local_currency }}
+              </div>
+            </div>
+          </i>
+        </ion-item>
+      </div>
+    </ion-list>
+    <p ng-show="!loading" style="text-align:center;padding-top:10px;">
+      That's all the transactions we got for now...
+    </p>
+    <button ng-show="!loading" type="button" class="button button-block button-dark" ng-click="logout()">Log out</button>
+  </ion-content>
+</ion-view>

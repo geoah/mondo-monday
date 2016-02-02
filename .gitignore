@@ -1,0 +1,17 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+# Phonegap
+platforms/
+plugins/
+
+# Ionic
+node_modules/
+www/lib/
+.io-config.json
+ionic.project
+resources/ios/
+resources/android/
+
+# Configuration file
+www/js/config.js
